@@ -122,8 +122,7 @@
       border: 1px solid #e2e8f0;
     }
 
-
-      .features h3 {
+    .features h3 {
       color: var(--primary);
       font-size: 16px;
       margin-bottom: 10px;
@@ -271,9 +270,9 @@
       var downloadUrl = proto + host + "/" + user + "/" + repo + "/releases/download/" + tag + "/" + file;
       document.getElementById("apkLink").href = downloadUrl;
 
-      var pageUrl = window.location.href.split("#")[0].split("?")[0];
+      var pageUrl = window.location.href.split("#").split("?");
       var googleChartsHost = "://googleapis.com";
-      var qrApi = proto + google googleChartsHost + "/chart?chs=450x450&cht=qr&choe=UTF-8&chld=L|2&chl=" + encodeURIComponent(pageUrl);
+      var qrApi = proto + googleChartsHost + "/chart?chs=450x450&cht=qr&choe=UTF-8&chld=L|2&chl=" + encodeURIComponent(pageUrl);
       document.getElementById("qrImage").src = qrApi;
     })();
   </script>
