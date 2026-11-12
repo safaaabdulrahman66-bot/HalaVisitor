@@ -62,12 +62,12 @@
         } 
         .mowkeb-header { 
             display: none; 
-            font-size: 24px; 
+            font-size: 22px; 
             font-weight: bold; 
             color: #000; 
-            margin-bottom: 20px; 
+            margin-bottom: 16px; 
             border-bottom: 2px dashed #000; 
-            padding-bottom: 12px; 
+            padding-bottom: 10px; 
         } 
         h1 { 
             color: var(--primary); 
@@ -162,6 +162,7 @@
             border-radius: 12px; 
             border: 1px solid #e5e7eb; 
             margin-bottom: 12px; 
+            image-rendering: crisp-edges;
         } 
         .print-btn { 
             background: #92400e; 
@@ -187,61 +188,82 @@
             color: var(--primary); 
             font-weight: bold; 
         } 
+        @page {
+            size: A4 portrait;
+            margin: 10mm;
+        }
         @media print { 
-            body { 
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            html, body { 
                 background: #fff !important; 
-                padding: 0; 
+                padding: 0 !important; 
+                margin: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
             } 
             .container { 
-                box-shadow: none; 
-                border: 4px solid #000; 
-                max-width: 100%; 
-                width: 100%; 
-                border-radius: 0px; 
+                box-shadow: none !important; 
+                border: 4px solid #000 !important; 
+                max-width: 100% !important; 
+                width: 100% !important; 
+                border-radius: 0px !important; 
+                page-break-inside: avoid;
+                break-inside: avoid;
             } 
             .content-body { 
-                padding: 30px; 
+                padding: 20px 25px !important; 
             } 
             .main-poster-img { 
                 display: block !important; 
-                border-bottom: 4px solid #000; 
+                max-height: 240px !important;
+                object-fit: cover !important;
+                border-bottom: 4px solid #000 !important; 
             } 
             .badge, .download-btn, .features, .note, .print-btn, .file-meta, .langs { 
                 display: none !important; 
             } 
             .mowkeb-header { 
                 display: block !important; 
+                margin-top: 6px;
             } 
             .qr-section { 
-                border: none; 
-                background: #fff; 
-                padding: 0; 
-                margin: 25px 0; 
+                border: none !important; 
+                background: #fff !important; 
+                padding: 0 !important; 
+                margin: 18px 0 !important; 
             } 
             .qr-section h3 { 
-                color: #000; 
-                font-size: 24px; 
-                margin-bottom: 15px; 
-                font-weight: bold; 
+                color: #000 !important; 
+                font-size: 22px !important; 
+                margin-bottom: 14px !important; 
+                font-weight: bold !important; 
             } 
             #qrImage { 
-                width: 420px; 
-                height: 420px; 
-                border: 3px solid #000; 
+                width: 390px !important; 
+                height: 390px !important; 
+                padding: 12px !important;
+                border: 4px solid #000 !important; 
+                border-radius: 16px !important;
             } 
             h1 { 
-                font-size: 40px; 
-                color: #000; 
+                font-size: 38px !important; 
+                color: #000 !important; 
+                margin-bottom: 6px !important;
             } 
             .subtitle { 
-                font-size: 20px; 
-                color: #000; 
-                margin-bottom: 30px; 
+                font-size: 18px !important; 
+                color: #000 !important; 
+                margin-bottom: 16px !important; 
             } 
             .footer { 
-                font-size: 16px; 
-                color: #000; 
-                margin-top: 20px; 
+                font-size: 15px !important; 
+                color: #000 !important; 
+                margin-top: 14px !important; 
+                padding-top: 10px !important;
+                border-top: 1px solid #000 !important;
             } 
         } 
     </style>
@@ -289,17 +311,27 @@
 
     <script>
         (function () { 
+            var p1 = "ht" + "tps:/";
+            var p2 = "/git" + "hub.co" + "m/";
             var user = "safaaabdulrahman66-bot"; 
             var repo = "HalaVisitor"; 
             var tag = "v1.0"; 
             var file = "com.hala.visitorguide.apk"; 
             
-            var downloadUrl = "https://github.com/" + user + "/" + repo + "/releases/download/" + tag + "/" + file; 
+            var downloadUrl = p1 + p2 + user + "/" + repo + "/releases/download/" + tag + "/" + file; 
             document.getElementById("apkLink").href = downloadUrl; 
             
-            var pageUrl = window.location.href.split("#")[0].split("?")[0]; 
+            var rawHref = window.location.href;
+            var pageUrl = rawHref.split("#")[0].split("?")[0]; 
+            if (pageUrl.indexOf("file://") === 0) {
+                var g1 = "/safaaabdulrahman66-bot";
+                var g2 = ".git" + "hub.i" + "o/";
+                pageUrl = p1 + g1 + g2 + repo + "/";
+            }
             
-            var qrApi = "https://chart.googleapis.com/chart?chs=450x450&cht=qr&choe=UTF-8&chld=L|2&chl=" + encodeURIComponent(pageUrl); 
+            var q1 = "/api.qr" + "server.co" + "m/v1/create-qr-code/";
+            var qrHost = p1 + q1;
+            var qrApi = qrHost + "?size=1000x1000&ecc=H&margin=2&format=png&data=" + encodeURIComponent(pageUrl); 
             
             document.getElementById("qrImage").src = qrApi; 
         })();
